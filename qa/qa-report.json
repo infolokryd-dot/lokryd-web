@@ -1,0 +1,175 @@
+{
+  "measurements": {
+    "390": {
+      "totalHeight": 9227,
+      "hasHorizontalScroll": false,
+      "maxGapBetweenConsecutiveContentBlocks": 128,
+      "gaps": [
+        {
+          "from": "section-0",
+          "to": "about-lokryd",
+          "visualContentGap": 64
+        },
+        {
+          "from": "about-lokryd",
+          "to": "section-2",
+          "visualContentGap": 128
+        },
+        {
+          "from": "section-2",
+          "to": "services",
+          "visualContentGap": 128
+        },
+        {
+          "from": "services",
+          "to": "safety",
+          "visualContentGap": 128
+        },
+        {
+          "from": "safety",
+          "to": "reliable",
+          "visualContentGap": 128
+        },
+        {
+          "from": "reliable",
+          "to": "section-6",
+          "visualContentGap": 128
+        },
+        {
+          "from": "section-6",
+          "to": "enquiry",
+          "visualContentGap": 128
+        },
+        {
+          "from": "enquiry",
+          "to": "footer-8",
+          "visualContentGap": 113
+        }
+      ]
+    },
+    "768": {
+      "totalHeight": 9118,
+      "hasHorizontalScroll": false,
+      "maxGapBetweenConsecutiveContentBlocks": 192,
+      "gaps": [
+        {
+          "from": "section-0",
+          "to": "about-lokryd",
+          "visualContentGap": 96
+        },
+        {
+          "from": "about-lokryd",
+          "to": "section-2",
+          "visualContentGap": 192
+        },
+        {
+          "from": "section-2",
+          "to": "services",
+          "visualContentGap": 192
+        },
+        {
+          "from": "services",
+          "to": "safety",
+          "visualContentGap": 192
+        },
+        {
+          "from": "safety",
+          "to": "reliable",
+          "visualContentGap": 192
+        },
+        {
+          "from": "reliable",
+          "to": "section-6",
+          "visualContentGap": 192
+        },
+        {
+          "from": "section-6",
+          "to": "enquiry",
+          "visualContentGap": 192
+        },
+        {
+          "from": "enquiry",
+          "to": "footer-8",
+          "visualContentGap": 177
+        }
+      ]
+    },
+    "1440": {
+      "totalHeight": 8261,
+      "hasHorizontalScroll": false,
+      "maxGapBetweenConsecutiveContentBlocks": 192,
+      "gaps": [
+        {
+          "from": "section-0",
+          "to": "about-lokryd",
+          "visualContentGap": 96
+        },
+        {
+          "from": "about-lokryd",
+          "to": "section-2",
+          "visualContentGap": 192
+        },
+        {
+          "from": "section-2",
+          "to": "services",
+          "visualContentGap": 192
+        },
+        {
+          "from": "services",
+          "to": "safety",
+          "visualContentGap": 192
+        },
+        {
+          "from": "safety",
+          "to": "reliable",
+          "visualContentGap": 192
+        },
+        {
+          "from": "reliable",
+          "to": "section-6",
+          "visualContentGap": 192
+        },
+        {
+          "from": "section-6",
+          "to": "enquiry",
+          "visualContentGap": 192
+        },
+        {
+          "from": "enquiry",
+          "to": "footer-8",
+          "visualContentGap": 177
+        }
+      ]
+    }
+  },
+  "consoleErrors": [],
+  "tests": {
+    "introVideoPresent": false,
+    "skipButtonWorked": true,
+    "heroVisibleAfterIntro": true,
+    "introSkippedOnReload": true,
+    "formValidationTriggered": true,
+    "formSubmissionSucceeded": true,
+    "temporaryServicePageWorks": true
+  },
+  "mobileAudit": {
+    "loadTimeMs": 638,
+    "perfMetrics": {
+      "domInteractive": 222,
+      "domContentLoaded": 222,
+      "loadComplete": 629
+    },
+    "a11yAudit": {
+      "totalImages": 11,
+      "missingAlt": 0,
+      "h1Count": 1,
+      "totalFormFields": 11,
+      "missingLabels": 0,
+      "emptyInteractiveElements": 27
+    },
+    "lighthouseScores": {
+      "performance": 98,
+      "accessibility": 100
+    }
+  }
+}

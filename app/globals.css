@@ -1,26 +1,216 @@
 @import "tailwindcss";
 
+@theme {
+  --color-cyan: #1DAFC8;
+  --color-indigo: #211F5A;
+  --color-navy: #16224E;
+  --color-teal: #2490A6;
+  --color-offwhite: #F6F8FA;
+
+  --font-heading: var(--font-heading), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: var(--font-body), "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cyan: #1DAFC8;
+  --indigo: #211F5A;
+  --navy: #16224E;
+  --teal: #2490A6;
+  --offwhite: #F6F8FA;
+  
+  /* Unified Spacing System */
+  --section-py: clamp(3rem, 5.2vw, 5rem);        /* 48px mobile (total 96px gap) -> 80px desktop (total 160px gap) */
+  --heading-mb: clamp(1.5rem, 2.5vw, 2.75rem);   /* 24px mobile -> 44px desktop */
+  --item-gap: clamp(2rem, 3vw, 3.25rem);         /* 32px -> 52px */
+
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: #FFFFFF;
+  color: #16224E;
+  font-family: var(--font-body), "Roboto", sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFFFFF;
+  color: #16224E;
+  overflow-x: clip;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(29, 175, 200, 0.2);
+  color: #211F5A;
+}
+
+/* Primary Pill Button (The only pill shape on the page) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #211F5A;
+  color: #FFFFFF;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1;
+  padding: 0.8125rem 1.875rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1DAFC8;
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid #1DAFC8;
+  outline-offset: 3px;
+}
+
+/* Text Link with animated underline from left (150-200ms) + 4px translating arrow */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.link-arrow .link-text {
+  position: relative;
+  display: inline-block;
+}
+
+.link-arrow .link-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background-color: #1DAFC8;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease-out;
+}
+
+.link-arrow:hover .link-text::after {
+  transform: scaleX(1);
+}
+
+.link-arrow .arrow-symbol {
+  display: inline-block;
+  transition: transform 180ms ease-out;
+}
+
+.link-arrow:hover .arrow-symbol {
+  transform: translateX(4px);
+}
+
+.link-arrow:focus-visible {
+  outline: 2px solid #1DAFC8;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Content Visibility & Lightweight Reveals
+   Default / No-JS: Content is 100% visible immediately */
+.reveal-init {
+  opacity: 1;
+  transform: none;
+}
+
+/* Only when html has .js class, unrevealed items start with subtle 12px offset */
+html.js .reveal-init:not(.reveal-revealed) {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+  will-change: opacity, transform;
+}
+
+html.js .reveal-init.reveal-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Below the fold content-visibility for ultra-smooth scrolling */
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+/* Underline Form Input Styling */
+.input-underlined {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #D5DAE1;
+  padding: 0.75rem 0;
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.0625rem;
+  color: #16224E;
+  transition: border-color 0.2s ease;
+  outline: none;
+  border-radius: 0;
+}
+
+.input-underlined:focus {
+  border-bottom-color: #1DAFC8;
+}
+
+.input-underlined::placeholder {
+  color: #94A3B8;
+  font-size: 0.9375rem;
+}
+
+.input-underlined.error {
+  border-bottom-color: #E11D48;
+}
+
+/* Infinite Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Reduced Motion Override & Print */
+@media (prefers-reduced-motion: reduce), print {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.js .reveal-init:not(.reveal-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
