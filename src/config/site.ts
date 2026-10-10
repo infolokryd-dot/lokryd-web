@@ -1,9 +1,7 @@
 export interface SiteContactChannel {
   label: string;
   email: string;
-  phone?: string;
-  hours?: string;
-  note?: string;
+  phone: string;
 }
 
 export interface SiteConfig {
@@ -12,10 +10,10 @@ export interface SiteConfig {
   url: string;
   heroHeadline: string;
   heroSubheadline: string;
+  email: string;
+  phone: string;
   contacts: {
-    corporate: SiteContactChannel;
-    support: SiteContactChannel;
-    partnerships: SiteContactChannel;
+    general: SiteContactChannel;
   };
   navLinks: Array<{ label: string; href: string }>;
 }
@@ -27,21 +25,13 @@ export const siteConfig: SiteConfig = {
   heroHeadline: "Elevate Every Commute",
   heroSubheadline:
     "Structured, technology-enabled transportation solutions designed for modern organizations and professionals.",
+  email: "info.lokryd@gmail.com",
+  phone: "+91 79972 25599",
   contacts: {
-    corporate: {
-      label: "Corporate Inquiries",
-      email: "corporate@lokryd.com",
-      hours: "Monday-Friday, 9 AM - 6 PM",
-    },
-    support: {
-      label: "Customer Support",
-      email: "support@lokryd.com",
+    general: {
+      label: "General Enquiries",
+      email: "info.lokryd@gmail.com",
       phone: "+91 79972 25599",
-      note: "24/7 Helpline",
-    },
-    partnerships: {
-      label: "Partnerships & Alliances",
-      email: "partnerships@lokryd.com",
     },
   },
   navLinks: [

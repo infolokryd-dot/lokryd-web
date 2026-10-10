@@ -79,7 +79,7 @@ export default function Navbar({ forceScrolled = false }: NavbarProps) {
       }`}>
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
           {/* Logo / Wordmark Left */}
-          <a
+          <Link
             href="/"
             onClick={(e) => {
               if (window.location.pathname === "/") {
@@ -99,7 +99,7 @@ export default function Navbar({ forceScrolled = false }: NavbarProps) {
                 className="object-contain object-left"
               />
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation: One Shared Rounded Container with 4 Individual Rounded Items */}
           <nav

@@ -40,38 +40,30 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Right Column: Direct Emails */}
+          {/* Right Column: Direct Contacts */}
           <div className="md:col-span-4 space-y-3">
             <p className="text-xs uppercase tracking-widest text-[#1DAFC8] font-semibold mb-4">
-              Direct Contact
+              Direct Contacts
             </p>
             <div className="flex flex-col space-y-2 text-sm text-white/75">
-              {siteConfig.contacts.support.phone && (
+              <p>
+                <span className="text-white/50 mr-1.5">Email:</span>
                 <a
-                  href={`tel:${siteConfig.contacts.support.phone.replace(/\s/g, "")}`}
+                  href={`mailto:${siteConfig.email}`}
+                  className="hover:text-[#1DAFC8] transition-colors"
+                >
+                  {siteConfig.email}
+                </a>
+              </p>
+              <p>
+                <span className="text-white/50 mr-1.5">Phone:</span>
+                <a
+                  href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
                   className="hover:text-[#1DAFC8] transition-colors font-medium"
                 >
-                  {siteConfig.contacts.support.phone}
+                  {siteConfig.phone}
                 </a>
-              )}
-              <a
-                href={`mailto:${siteConfig.contacts.corporate.email}`}
-                className="hover:text-[#1DAFC8] transition-colors"
-              >
-                {siteConfig.contacts.corporate.email}
-              </a>
-              <a
-                href={`mailto:${siteConfig.contacts.support.email}`}
-                className="hover:text-[#1DAFC8] transition-colors"
-              >
-                {siteConfig.contacts.support.email}
-              </a>
-              <a
-                href={`mailto:${siteConfig.contacts.partnerships.email}`}
-                className="hover:text-[#1DAFC8] transition-colors"
-              >
-                {siteConfig.contacts.partnerships.email}
-              </a>
+              </p>
             </div>
           </div>
         </div>

@@ -114,7 +114,7 @@ export default function EnquirySection() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/enquiry", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -199,74 +199,31 @@ export default function EnquirySection() {
               </div>
             </div>
 
-            {/* Direct Contacts List */}
-            <div className="reveal-init space-y-6 pt-6 border-t border-[#16224E]/10">
+            {/* Direct Contacts */}
+            <div className="reveal-init space-y-4 pt-6 border-t border-[#16224E]/10">
               <h3 className="font-heading font-semibold text-xl text-[#16224E]">
                 Direct Contacts
               </h3>
 
-              <div className="space-y-5">
-                {/* Corporate Inquiries */}
-                <div className="space-y-1">
-                  <p className="text-xs uppercase tracking-wider text-[#1DAFC8] font-semibold">
-                    {siteConfig.contacts.corporate.label}
-                  </p>
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-wider text-[#1DAFC8] font-semibold">
+                  {siteConfig.contacts.general.label}
+                </p>
+                <div className="space-y-1 text-base sm:text-lg">
                   <p>
                     <a
-                      href={`mailto:${siteConfig.contacts.corporate.email}`}
-                      className="font-medium text-base sm:text-lg text-[#16224E] hover:text-[#1DAFC8] transition-colors"
+                      href={`mailto:${siteConfig.contacts.general.email}`}
+                      className="font-medium text-[#16224E] hover:text-[#1DAFC8] transition-colors"
                     >
-                      {siteConfig.contacts.corporate.email}
+                      {siteConfig.contacts.general.email}
                     </a>
                   </p>
-                  {siteConfig.contacts.corporate.hours && (
-                    <p className="text-xs sm:text-sm text-[#16224E]/70 font-light">
-                      {siteConfig.contacts.corporate.hours}
-                    </p>
-                  )}
-                </div>
-
-                {/* Customer Support */}
-                <div className="space-y-1">
-                  <p className="text-xs uppercase tracking-wider text-[#1DAFC8] font-semibold">
-                    {siteConfig.contacts.support.label}
-                  </p>
-                  {siteConfig.contacts.support.phone && (
-                    <p>
-                      <a
-                        href={`tel:${siteConfig.contacts.support.phone.replace(/\s/g, "")}`}
-                        className="font-medium text-base sm:text-lg text-[#16224E] hover:text-[#1DAFC8] transition-colors"
-                      >
-                        {siteConfig.contacts.support.phone}
-                      </a>
-                    </p>
-                  )}
                   <p>
                     <a
-                      href={`mailto:${siteConfig.contacts.support.email}`}
-                      className="font-medium text-base sm:text-lg text-[#16224E] hover:text-[#1DAFC8] transition-colors"
+                      href={`tel:${siteConfig.contacts.general.phone.replace(/\s/g, "")}`}
+                      className="font-medium text-[#16224E] hover:text-[#1DAFC8] transition-colors"
                     >
-                      {siteConfig.contacts.support.email}
-                    </a>
-                  </p>
-                  {siteConfig.contacts.support.note && (
-                    <p className="text-xs sm:text-sm text-[#16224E]/70 font-light">
-                      {siteConfig.contacts.support.note}
-                    </p>
-                  )}
-                </div>
-
-                {/* Partnerships & Alliances */}
-                <div className="space-y-1">
-                  <p className="text-xs uppercase tracking-wider text-[#1DAFC8] font-semibold">
-                    {siteConfig.contacts.partnerships.label}
-                  </p>
-                  <p>
-                    <a
-                      href={`mailto:${siteConfig.contacts.partnerships.email}`}
-                      className="font-medium text-base sm:text-lg text-[#16224E] hover:text-[#1DAFC8] transition-colors"
-                    >
-                      {siteConfig.contacts.partnerships.email}
+                      {siteConfig.contacts.general.phone}
                     </a>
                   </p>
                 </div>

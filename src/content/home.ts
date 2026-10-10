@@ -598,7 +598,7 @@ export const homeContent: HomeContent = {
         "Thank you for contacting LOKRYD. A member of our corporate team will review your requirements and reach out shortly.",
       resetButtonText: "Send Another Inquiry",
       errorMessage:
-        "We were unable to transmit your inquiry. Please try again or reach out directly to corporate@lokryd.com.",
+        "We were unable to transmit your inquiry. Please try again or reach out directly to info.lokryd@gmail.com.",
     },
     faqHeadline: "Frequently Asked Questions",
     // TODO: Source document is cut off after this single item. More FAQ items will be added in a future phase.
