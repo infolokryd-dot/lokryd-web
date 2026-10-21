@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { siteConfig } from "@/src/config/site";
 import "./globals.css";
 
 const overusedGrotesk = localFont({
@@ -40,36 +39,56 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+
 export const metadata: Metadata = {
-  title: "LOKRYD — Elevate Every Commute",
-  description: siteConfig.heroSubheadline,
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL("https://lokryd.in"),
+  title: {
+    default: "LOKRYD | Corporate & Private Mobility Services",
+    template: "%s | LOKRYD",
+  },
+  description:
+    "LOKRYD provides corporate employee transportation, corporate car rentals, airport transfers, outstation travel, and private chauffeur services.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/brand/star.svg",
     apple: "/brand/star.svg",
   },
   openGraph: {
-    title: "LOKRYD — Elevate Every Commute",
-    description: siteConfig.heroSubheadline,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
+    title: "LOKRYD | Corporate & Private Mobility Services",
+    description:
+      "Reliable corporate transportation and private mobility services for business and personal journeys.",
+    url: "https://lokryd.in/",
+    siteName: "LOKRYD",
     images: [
       {
         url: "/images/hero-still.jpg",
         width: 1200,
         height: 675,
-        alt: "LOKRYD Premium Ground Mobility",
+        alt: "LOKRYD corporate and private ground mobility services",
       },
     ],
+    locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "LOKRYD — Elevate Every Commute",
-    description: siteConfig.heroSubheadline,
+    title: "LOKRYD | Corporate & Private Mobility Services",
+    description:
+      "Corporate employee transportation, airport transfers, and private chauffeur services.",
     images: ["/images/hero-still.jpg"],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
+
 
 export default function RootLayout({
   children,

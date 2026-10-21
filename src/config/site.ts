@@ -20,11 +20,11 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   name: "LOKRYD",
-  tagline: "Seamless Journeys. Elevated Experience.",
-  url: "https://www.lokryd.com",
-  heroHeadline: "Elevate Every Commute",
+  tagline: "Tailored Mobility for Every Need",
+  url: "https://www.lokryd.in",
+  heroHeadline: "Move With Purpose. Journeys With Precision.",
   heroSubheadline:
-    "Structured, technology-enabled transportation solutions designed for modern organizations and professionals.",
+    "Structured, technology-enabled transportation built for modern organizations and the professionals who power them.",
   email: "info.lokryd@gmail.com",
   phone: "+91 79972 25599",
   contacts: {
@@ -35,9 +35,10 @@ export const siteConfig: SiteConfig = {
     },
   },
   navLinks: [
-    { label: "Services", href: "#services" },
-    { label: "Why LOKRYD", href: "#reliable" },
-    { label: "Technology & Safety", href: "#safety" },
-    { label: "Contact", href: "#enquiry" },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Insights", href: "/insights" },
   ],
 };
+

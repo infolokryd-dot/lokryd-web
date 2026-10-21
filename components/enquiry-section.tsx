@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { siteConfig } from "@/src/config/site";
 import { homeContent } from "@/src/content/home";
-import ScrollRevealText from "@/components/scroll-reveal-text";
 
 interface FormErrors {
   fullName?: string;
@@ -14,7 +13,6 @@ interface FormErrors {
 }
 
 export default function EnquirySection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
   const fullNameInputRef = useRef<HTMLInputElement | null>(null);
 
   // Form states
@@ -24,7 +22,7 @@ export default function EnquirySection() {
     phone: "",
     organization: "",
     inquiryType: "Corporate Services",
-    serviceInterested: "",
+    serviceInterested: "Employee Transportation",
     message: "",
     preferredContactMethod: "Email",
     company_fax_auth: "", // honeypot
@@ -36,37 +34,7 @@ export default function EnquirySection() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   // FAQ accordion state
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  const focusForm = () => {
-    setTimeout(() => {
-      if (fullNameInputRef.current) {
-        fullNameInputRef.current.focus();
-      }
-    }, 200);
-  };
-
-  // Preselect listener from other buttons on the page
-  useEffect(() => {
-    const handlePreselect = (e: Event) => {
-      const customEvent = e as CustomEvent<{ inquiryType: string }>;
-      if (customEvent.detail?.inquiryType) {
-        setFormData((prev) => ({
-          ...prev,
-          inquiryType: customEvent.detail.inquiryType,
-        }));
-        focusForm();
-      }
-    };
-
-    window.addEventListener("lokryd:select-inquiry", handlePreselect);
-    return () => window.removeEventListener("lokryd:select-inquiry", handlePreselect);
-  }, []);
-
-  const handleQuickAction = (inquiryType: string) => {
-    setFormData((prev) => ({ ...prev, inquiryType }));
-    focusForm();
-  };
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -143,7 +111,7 @@ export default function EnquirySection() {
       phone: "",
       organization: "",
       inquiryType: "Corporate Services",
-      serviceInterested: "",
+      serviceInterested: "Employee Transportation",
       message: "",
       preferredContactMethod: "Email",
       company_fax_auth: "",
@@ -155,414 +123,299 @@ export default function EnquirySection() {
 
   return (
     <section
-      id={homeContent.enquiry.anchor}
-      ref={sectionRef}
-      className="below-fold relative w-full bg-[#FFFFFF] py-16 sm:py-20 md:py-24 px-6 md:px-12 lg:px-20 scroll-mt-20 overflow-hidden"
+      id="enquiry"
+      className="relative w-full bg-[#FFFFFF] py-20 sm:py-24 md:py-32 px-6 md:px-12 lg:px-20 scroll-mt-20 overflow-hidden border-t border-[#16224E]/08"
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Two-Column Editorial Layout: Contact Information Left, Rounded Form Panel Right */}
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Two-Column Editorial Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Editorial Contact Information & Quick Actions */}
-          <div className="lg:col-span-5 space-y-10">
-            {/* Header & Supporting Copy */}
-            <div className="reveal-init space-y-4">
-              <p className="text-xs uppercase tracking-widest text-[#1DAFC8] font-semibold">
-                Direct Inquiries & Consultations
-              </p>
-              <ScrollRevealText
-                as="h2"
-                className="font-heading font-semibold text-3xl sm:text-4xl lg:text-[44px] text-[#16224E] tracking-tight leading-[1.15]"
-              >
-                {homeContent.enquiry.headline}
-              </ScrollRevealText>
-              <p className="font-body text-[#16224E]/75 text-base sm:text-lg font-light leading-relaxed">
-                {homeContent.enquiry.supportText}. Whether structuring daily employee commutes, managing university campus transit, or arranging executive services across Telangana, our mobility specialists are ready to assist.
-              </p>
-            </div>
-
-            {/* Quick Action Selector Buttons */}
-            <div className="reveal-init space-y-3 pt-2">
-              <span className="block text-xs uppercase tracking-wider text-[#16224E]/60 font-semibold">
-                Quick Selection
+          {/* Left Column: Official Contact Information */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-3">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#1DAFC8] font-semibold block">
+                Direct Communication
               </span>
-              <div className="flex flex-wrap gap-3">
-                {homeContent.enquiry.quickActions.map((btn) => (
-                  <button
-                    key={btn.label}
-                    type="button"
-                    onClick={() => handleQuickAction(btn.preselectType)}
-                    className="btn-primary text-xs sm:text-sm py-2.5 px-5 cursor-pointer"
+              <h2 className="font-heading font-black uppercase text-[clamp(2.25rem,4vw,3.75rem)] text-[#16224E] tracking-tight leading-[0.94]">
+                Initiate Service
+              </h2>
+              <p className="font-body text-[#16224E]/75 text-base sm:text-lg leading-relaxed pt-2">
+                Connect directly with our fleet operations desk to discuss corporate employee transit contracts, executive rentals, or private journeys.
+              </p>
+            </div>
+
+            {/* Official Contact Cards */}
+            <div className="space-y-4 pt-2">
+              <div className="p-6 bg-[#F6F8FA] rounded-xl border border-[#16224E]/10 space-y-1">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#1DAFC8] font-semibold">
+                  Official Email
+                </span>
+                <p className="font-body text-base sm:text-lg font-medium text-[#16224E]">
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="hover:text-[#1DAFC8] transition-colors"
                   >
-                    {btn.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Direct Contacts */}
-            <div className="reveal-init space-y-4 pt-6 border-t border-[#16224E]/10">
-              <h3 className="font-heading font-semibold text-xl text-[#16224E]">
-                Direct Contacts
-              </h3>
-
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-wider text-[#1DAFC8] font-semibold">
-                  {siteConfig.contacts.general.label}
+                    {siteConfig.email}
+                  </a>
                 </p>
-                <div className="space-y-1 text-base sm:text-lg">
-                  <p>
-                    <a
-                      href={`mailto:${siteConfig.contacts.general.email}`}
-                      className="font-medium text-[#16224E] hover:text-[#1DAFC8] transition-colors"
-                    >
-                      {siteConfig.contacts.general.email}
-                    </a>
-                  </p>
-                  <p>
-                    <a
-                      href={`tel:${siteConfig.contacts.general.phone.replace(/\s/g, "")}`}
-                      className="font-medium text-[#16224E] hover:text-[#1DAFC8] transition-colors"
-                    >
-                      {siteConfig.contacts.general.phone}
-                    </a>
-                  </p>
-                </div>
+                <p className="text-xs text-[#16224E]/50">
+                  Direct dispatch to our corporate transportation coordinator
+                </p>
+              </div>
+
+              <div className="p-6 bg-[#F6F8FA] rounded-xl border border-[#16224E]/10 space-y-1">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#1DAFC8] font-semibold">
+                  Direct Telephone
+                </span>
+                <p className="font-body text-base sm:text-lg font-medium text-[#16224E]">
+                  <a
+                    href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+                    className="hover:text-[#1DAFC8] transition-colors"
+                  >
+                    {siteConfig.phone}
+                  </a>
+                </p>
+                <p className="text-xs text-[#16224E]/50">
+                  Available for scheduling queries and urgent itinerary adjustments
+                </p>
               </div>
             </div>
 
-            {/* Quiet FAQ Accordion */}
-            <div className="reveal-init space-y-4 pt-6 border-t border-[#16224E]/10">
-              <h3 className="font-heading font-semibold text-xl text-[#16224E]">
-                {homeContent.enquiry.faqHeadline}
+            {/* FAQ Accordion */}
+            <div className="pt-6 space-y-3">
+              <h3 className="font-heading font-bold uppercase text-lg text-[#16224E] tracking-tight">
+                Frequently Asked Questions
               </h3>
+              <div className="border border-[#16224E]/10 rounded-xl overflow-hidden divide-y divide-[#16224E]/10">
+                <div className="p-4 bg-white">
+                  <button
+                    type="button"
+                    onClick={() => setExpandedFaq(expandedFaq === 0 ? null : 0)}
+                    className="w-full flex justify-between items-center text-left font-heading font-semibold text-sm text-[#16224E]"
+                  >
+                    <span>How do corporate employee transit agreements work?</span>
+                    <span className="text-[#1DAFC8] ml-2">{expandedFaq === 0 ? "−" : "+"}</span>
+                  </button>
+                  {expandedFaq === 0 && (
+                    <p className="font-body text-xs text-[#16224E]/75 mt-2 leading-relaxed">
+                      We evaluate your employee headcount, shift rosters, and location hubs to establish customized vehicle assignments, optimized routes, and monthly reporting.
+                    </p>
+                  )}
+                </div>
 
-              <div className="space-y-3">
-                {homeContent.enquiry.faqs.map((faq, idx) => (
-                  <div key={faq.question} className="border-b border-[#16224E]/10 pb-3">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedFaq(expandedFaq === idx ? null : idx)
-                      }
-                      className="w-full text-left flex justify-between items-center py-1.5 focus:outline-none cursor-pointer"
-                      aria-expanded={expandedFaq === idx}
-                    >
-                      <span className="font-medium text-sm sm:text-base text-[#16224E] pr-3">
-                        {faq.question}
-                      </span>
-                      <span className="text-lg text-[#1DAFC8] ml-2 shrink-0">
-                        {expandedFaq === idx ? "−" : "+"}
-                      </span>
-                    </button>
-                    {expandedFaq === idx && (
-                      <p className="mt-2 text-xs sm:text-sm text-[#16224E]/80 leading-relaxed font-light animate-fade-in">
-                        {faq.answer}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                <div className="p-4 bg-white">
+                  <button
+                    type="button"
+                    onClick={() => setExpandedFaq(expandedFaq === 1 ? null : 1)}
+                    className="w-full flex justify-between items-center text-left font-heading font-semibold text-sm text-[#16224E]"
+                  >
+                    <span>Are drivers background verified?</span>
+                    <span className="text-[#1DAFC8] ml-2">{expandedFaq === 1 ? "−" : "+"}</span>
+                  </button>
+                  {expandedFaq === 1 && (
+                    <p className="font-body text-xs text-[#16224E]/75 mt-2 leading-relaxed">
+                      Yes. All LOKRYD drivers undergo verification of identity, address, driving credentials, and training in passenger hospitality and safety.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Large Rounded Enquiry Form Panel */}
-          <div className="lg:col-span-7">
-            <div className="reveal-init bg-[#F7F9FC] border border-[#E3E8EE] rounded-3xl p-7 sm:p-9 md:p-11 shadow-[0_12px_40px_rgba(22,34,78,0.04)]">
-              {/* Form Panel Header */}
-              <div className="mb-7 pb-5 border-b border-[#E3E8EE]">
-                <h3 className="font-heading font-semibold text-2xl sm:text-3xl text-[#16224E] tracking-tight mb-2">
-                  Send an Enquiry
-                </h3>
-                <p className="font-body text-sm sm:text-base text-[#16224E]/70 font-light">
-                  Fill out the details below and an enterprise mobility representative will reach out within 2–4 business hours.
-                </p>
-              </div>
-
-              {isSuccess ? (
-                <div className="py-10 px-6 sm:px-8 bg-white border-l-2 border-[#1DAFC8] rounded-2xl space-y-6 animate-fade-in shadow-sm">
-                  <h3 className="font-heading font-semibold text-2xl sm:text-3xl text-[#16224E]">
-                    {homeContent.enquiry.form.successTitle}
-                  </h3>
-                  <p className="font-body text-[#16224E]/85 text-base sm:text-lg leading-relaxed">
-                    {homeContent.enquiry.form.successMessage}
-                  </p>
-                  <div className="pt-2">
-                    <button
-                      type="button"
-                      onClick={handleResetForm}
-                      className="btn-primary text-sm py-2.5 px-6"
-                    >
-                      {homeContent.enquiry.form.resetButtonText}
-                    </button>
-                  </div>
+          {/* Right Column: Functional Supabase Enquiry Form */}
+          <div className="lg:col-span-7 bg-[#F6F8FA] p-8 sm:p-10 md:p-12 rounded-2xl border border-[#16224E]/10 shadow-sm">
+            {isSuccess ? (
+              <div className="py-12 text-center space-y-5 animate-fade-in">
+                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} noValidate className="space-y-6 sm:space-y-7">
-                  {/* Honeypot field (hidden from human visitors) */}
-                  <div className="hidden" aria-hidden="true">
-                    <label htmlFor="company_fax_auth">Leave this field blank</label>
-                    <input
-                      type="text"
-                      id="company_fax_auth"
-                      name="company_fax_auth"
-                      value={formData.company_fax_auth}
-                      onChange={(e) =>
-                        setFormData({ ...formData, company_fax_auth: e.target.value })
-                      }
-                      tabIndex={-1}
-                      autoComplete="off"
-                    />
+                <h3 className="font-heading font-black text-2xl uppercase text-[#16224E]">
+                  {homeContent.enquiry.form.successTitle}
+                </h3>
+                <p className="font-body text-[#16224E]/80 text-base max-w-md mx-auto leading-relaxed">
+                  {homeContent.enquiry.form.successMessage}
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResetForm}
+                  className="btn-primary text-sm py-2.5 px-6 mt-4"
+                >
+                  {homeContent.enquiry.form.resetButtonText}
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                <div>
+                  <h3 className="font-heading font-black uppercase text-xl sm:text-2xl text-[#16224E] tracking-tight">
+                    Service Enquiry Form
+                  </h3>
+                  <p className="font-body text-xs sm:text-sm text-[#16224E]/60 mt-1">
+                    Complete this form for contract estimates, corporate consultations, or executive bookings.
+                  </p>
+                </div>
+
+                {serverError && (
+                  <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+                    {serverError}
                   </div>
+                )}
 
-                  {serverError && (
-                    <div
-                      role="alert"
-                      className="p-4 bg-red-50 text-red-800 text-sm border-l-2 border-red-600 leading-relaxed rounded"
-                    >
-                      {serverError}
-                    </div>
-                  )}
+                {/* Honeypot field (hidden from users) */}
+                <input
+                  type="text"
+                  name="company_fax_auth"
+                  value={formData.company_fax_auth}
+                  onChange={(e) => setFormData({ ...formData, company_fax_auth: e.target.value })}
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7">
-                    {/* Full Name* */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="fullName"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.fullName} *
-                      </label>
-                      <input
-                        ref={fullNameInputRef}
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        required
-                        value={formData.fullName}
-                        onChange={(e) => {
-                          setFormData({ ...formData, fullName: e.target.value });
-                          if (errors.fullName) setErrors({ ...errors, fullName: undefined });
-                        }}
-                        className={`input-underlined ${errors.fullName ? "error" : ""}`}
-                      />
-                      {errors.fullName && (
-                        <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>
-                      )}
-                    </div>
-
-                    {/* Email Address* */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="email"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.email} *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => {
-                          setFormData({ ...formData, email: e.target.value });
-                          if (errors.email) setErrors({ ...errors, email: undefined });
-                        }}
-                        className={`input-underlined ${errors.email ? "error" : ""}`}
-                      />
-                      {errors.email && (
-                        <p className="text-xs text-red-600 mt-1">{errors.email}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7">
-                    {/* Phone Number* */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="phone"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.phone} *
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => {
-                          setFormData({ ...formData, phone: e.target.value });
-                          if (errors.phone) setErrors({ ...errors, phone: undefined });
-                        }}
-                        className={`input-underlined ${errors.phone ? "error" : ""}`}
-                      />
-                      {errors.phone && (
-                        <p className="text-xs text-red-600 mt-1">{errors.phone}</p>
-                      )}
-                    </div>
-
-                    {/* Organization Name */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="organization"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.organization}
-                      </label>
-                      <input
-                        type="text"
-                        id="organization"
-                        name="organization"
-                        value={formData.organization}
-                        onChange={(e) =>
-                          setFormData({ ...formData, organization: e.target.value })
-                        }
-                        className="input-underlined"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7">
-                    {/* Inquiry Type* */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="inquiryType"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.inquiryType} *
-                      </label>
-                      <select
-                        id="inquiryType"
-                        name="inquiryType"
-                        required
-                        value={formData.inquiryType}
-                        onChange={(e) =>
-                          setFormData({ ...formData, inquiryType: e.target.value })
-                        }
-                        className="input-underlined cursor-pointer bg-transparent"
-                      >
-                        {homeContent.enquiry.form.inquiryTypeOptions.map((opt) => (
-                          <option key={opt} value={opt} className="bg-white text-[#16224E]">
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Service Interested In */}
-                    <div className="space-y-2">
-                      <label
-                        htmlFor="serviceInterested"
-                        className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                      >
-                        {homeContent.enquiry.form.fields.serviceInterested}
-                      </label>
-                      <select
-                        id="serviceInterested"
-                        name="serviceInterested"
-                        value={formData.serviceInterested}
-                        onChange={(e) =>
-                          setFormData({ ...formData, serviceInterested: e.target.value })
-                        }
-                        className="input-underlined cursor-pointer bg-transparent"
-                      >
-                        <option value="" className="bg-white text-[#16224E]">Select Service (Optional)</option>
-                        {homeContent.enquiry.form.serviceInterestedOptions.map((opt) => (
-                          <option key={opt} value={opt} className="bg-white text-[#16224E]">
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Message* */}
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="message"
-                      className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold"
-                    >
-                      {homeContent.enquiry.form.fields.message} *
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Full Name */}
+                  <div className="space-y-1">
+                    <label htmlFor="fullName" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Full Name *
                     </label>
-                    <textarea
-                      id="message"
-                      name="message"
+                    <input
+                      id="fullName"
+                      ref={fullNameInputRef}
+                      type="text"
                       required
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => {
-                        setFormData({ ...formData, message: e.target.value });
-                        if (errors.message) setErrors({ ...errors, message: undefined });
-                      }}
-                      className={`input-underlined resize-y bg-transparent ${
-                        errors.message ? "error" : ""
+                      placeholder="e.g. John Doe"
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8] ${
+                        errors.fullName ? "border-red-400" : "border-[#16224E]/15"
                       }`}
                     />
-                    {errors.message && (
-                      <p className="text-xs text-red-600 mt-1">{errors.message}</p>
-                    )}
+                    {errors.fullName && <p className="text-xs text-red-500">{errors.fullName}</p>}
                   </div>
 
-                  {/* Preferred Contact Method */}
-                  <div className="space-y-3">
-                    <span className="block text-xs uppercase tracking-wider text-[#16224E]/70 font-semibold">
-                      {homeContent.enquiry.form.fields.contactMethod}
-                    </span>
-                    <div className="flex flex-wrap gap-6 pt-1">
-                      {homeContent.enquiry.form.contactMethodOptions.map((method) => {
-                        const radioId = `contactMethod-${method.toLowerCase()}`;
-                        const isSelected = formData.preferredContactMethod === method;
-                        return (
-                          <label
-                            key={method}
-                            htmlFor={radioId}
-                            className="inline-flex items-center gap-2.5 cursor-pointer text-sm text-[#16224E] select-none group"
-                          >
-                            <input
-                              type="radio"
-                              id={radioId}
-                              name="preferredContactMethod"
-                              value={method}
-                              checked={isSelected}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  preferredContactMethod: e.target.value,
-                                })
-                              }
-                              className="sr-only peer"
-                            />
-                            <span
-                              aria-hidden="true"
-                              className="w-[20px] h-[20px] rounded-full border border-[#D5DAE1] bg-white flex items-center justify-center shrink-0 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-[#1DAFC8] peer-focus-visible:ring-offset-2"
-                            >
-                              {isSelected && (
-                                <span className="w-[7px] h-[7px] rounded-full bg-[#1DAFC8] block shrink-0" />
-                              )}
-                            </span>
-                            <span>{method}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
+                  {/* Email */}
+                  <div className="space-y-1">
+                    <label htmlFor="email" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Email Address *
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      placeholder="name@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8] ${
+                        errors.email ? "border-red-400" : "border-[#16224E]/15"
+                      }`}
+                    />
+                    {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Phone */}
+                  <div className="space-y-1">
+                    <label htmlFor="phone" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Phone Number *
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      required
+                      placeholder="+91 00000 00000"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className={`w-full px-4 py-3 bg-white border rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8] ${
+                        errors.phone ? "border-red-400" : "border-[#16224E]/15"
+                      }`}
+                    />
+                    {errors.phone && <p className="text-xs text-red-500">{errors.phone}</p>}
                   </div>
 
-                  {/* Submit Button */}
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn-primary text-base py-3 px-8 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  {/* Organization */}
+                  <div className="space-y-1">
+                    <label htmlFor="organization" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Organization / Company
+                    </label>
+                    <input
+                      id="organization"
+                      type="text"
+                      placeholder="Company Name (Optional)"
+                      value={formData.organization}
+                      onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
+                      className="w-full px-4 py-3 bg-white border border-[#16224E]/15 rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8]"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Inquiry Type */}
+                  <div className="space-y-1">
+                    <label htmlFor="inquiryType" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Inquiry Category *
+                    </label>
+                    <select
+                      id="inquiryType"
+                      value={formData.inquiryType}
+                      onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
+                      className="w-full px-4 py-3 bg-white border border-[#16224E]/15 rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8]"
                     >
-                      {isSubmitting
-                        ? homeContent.enquiry.form.submittingText
-                        : homeContent.enquiry.form.submitButton}
-                    </button>
+                      <option value="Corporate Services">Corporate Mobility & Rosters</option>
+                      <option value="Individual Booking">Private / Executive Chauffeur</option>
+                      <option value="Partnership">Institutional Partnership</option>
+                      <option value="Other">Other Enquiry</option>
+                    </select>
                   </div>
-                </form>
-              )}
-            </div>
+
+                  {/* Service Interested */}
+                  <div className="space-y-1">
+                    <label htmlFor="serviceInterested" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                      Service Interested In
+                    </label>
+                    <select
+                      id="serviceInterested"
+                      value={formData.serviceInterested}
+                      onChange={(e) => setFormData({ ...formData, serviceInterested: e.target.value })}
+                      className="w-full px-4 py-3 bg-white border border-[#16224E]/15 rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8]"
+                    >
+                      <option value="Employee Transportation">Employee Transportation</option>
+                      <option value="Shuttle Services">Campus & Event Shuttles</option>
+                      <option value="Car Rental">Corporate Car Rental</option>
+                      <option value="Airport Transfers">Airport Transfers</option>
+                      <option value="Outstation Travel">Intercity / Outstation</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="space-y-1">
+                  <label htmlFor="message" className="text-xs font-mono uppercase tracking-wider text-[#16224E]/80 font-semibold block">
+                    Message / Requirements *
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={4}
+                    placeholder="Describe your commute routes, shift schedules, vehicle preferences, or travel dates..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className={`w-full px-4 py-3 bg-white border rounded-lg text-sm text-[#16224E] focus:outline-none focus:ring-2 focus:ring-[#1DAFC8] ${
+                      errors.message ? "border-red-400" : "border-[#16224E]/15"
+                    }`}
+                  />
+                  {errors.message && <p className="text-xs text-red-500">{errors.message}</p>}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full py-3.5 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                >
+                  {isSubmitting ? "Transmitting Enquiry..." : "Submit Enquiry"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

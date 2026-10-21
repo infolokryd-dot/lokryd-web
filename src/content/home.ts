@@ -224,8 +224,8 @@ export const homeContent: HomeContent = {
       href: "#enquiry",
       preselectType: "Corporate Services",
     },
-    image: "/images/hero-still.jpg",
-    imageAlt: "Luxury dark executive vehicle in motion on an urban road at twilight",
+    image: "/images/transport/hero-executive.jpg",
+    imageAlt: "LOKRYD corporate fleet of white sedans with uniformed chauffeur standing beside the vehicles",
   },
   value: {
     anchor: "about-lokryd",
@@ -237,17 +237,17 @@ export const homeContent: HomeContent = {
       {
         title: "Safety You Can Trust",
         description:
-          "Every driver verified. Every route monitored. Every journey protected with advanced safety protocols and 24/7 support.",
+          "Every driver verified. Every route monitored. Every journey protected with proven safety protocols and direct operations support.",
       },
       {
         title: "Technology That Serves",
         description:
-          "Seamless booking, real-time tracking, and instant updates. Our platform works effortlessly so your commute does too.",
+          "Real-time GPS tracking and route optimization. Our systems work seamlessly so your commute remains predictable.",
       },
       {
-        title: "Sustainability in Motion",
+        title: "Fleet Care & Hygiene",
         description:
-          "Eco-friendly fleet options that reduce carbon footprint while maintaining premium comfort for every passenger.",
+          "Regularly serviced, sanitized vehicles that maintain consistent comfort and mechanical reliability for every passenger.",
       },
     ],
     officeOnWheels: {
@@ -259,11 +259,11 @@ export const homeContent: HomeContent = {
   },
   audiences: {
     bridge:
-      "Whether you're an organization seeking employee transportation solutions or a professional looking for a reliable daily commute, LOKRYD delivers the experience you deserve.",
+      "Whether powering thousands of daily employee commutes or delivering discreet executive travel, LOKRYD combines operational rigor with exceptional passenger comfort.",
     organizations: {
       title: "For Organizations",
-      image: "/images/audience-organizations.jpg",
-      imageAlt: "Executive vehicle waiting outside a modern architectural corporate building at twilight",
+      image: "/images/transport/campus-fleet.jpg",
+      imageAlt: "Dedicated LOKRYD passenger coach bus for corporate workforce mobility",
       types: [
         {
           name: "MNCs & Tech Parks",
@@ -290,8 +290,8 @@ export const homeContent: HomeContent = {
     },
     individuals: {
       title: "For Individuals",
-      image: "/images/audience-individuals.jpg",
-      imageAlt: "Passenger working calmly on a laptop in the rear seat of a premium vehicle",
+      image: "/images/transport/executive-passenger.jpg",
+      imageAlt: "Executive passenger in rear cabin of premium vehicle",
       types: [
         {
           name: "Individual Professionals",
@@ -329,8 +329,8 @@ export const homeContent: HomeContent = {
           "Structured employee transportation with dedicated routes, verified drivers, and enterprise-grade reliability.",
         actionText: "Learn More",
         actionHref: "/services/corporate-transportation",
-        image: "/images/service-corporate.jpg",
-        imageAlt: "Orderly employee pickup at a modern business park campus in early morning",
+        image: "/images/transport/sedan-fleet.jpg",
+        imageAlt: "Fleet of white LOKRYD corporate sedans lined up for enterprise transport",
         subLinks: [
           {
             title: "Employee Transportation Services",
@@ -361,8 +361,8 @@ export const homeContent: HomeContent = {
           "Scalable group transportation for offices, events, and conferences with flexible scheduling.",
         actionText: "Explore Shuttles",
         actionHref: "/services/shuttle-services",
-        image: "/images/service-shuttle.jpg",
-        imageAlt: "Modern executive shuttle coach traveling on a landscaped campus boulevard",
+        image: "/images/transport/campus-fleet.jpg",
+        imageAlt: "Dedicated LOKRYD passenger coach bus for corporate workforce mobility",
         subLinks: [
           {
             title: "Corporate Shuttle Transportation",
@@ -385,8 +385,8 @@ export const homeContent: HomeContent = {
           "Premium transportation for airport transfers, conferences, weddings, and special occasions.",
         actionText: "View Services",
         actionHref: "/services/executive-and-events",
-        image: "/images/service-executive.jpg",
-        imageAlt: "Executive sedan with discreet chauffeur at an airport arrivals curb in evening light",
+        image: "/images/transport/airport-chauffeur.jpg",
+        imageAlt: "Executive luxury sedan parked at entrance for private chauffeur and event travel",
         subLinks: [
           {
             title: "Airport Transfers",
@@ -445,36 +445,31 @@ export const homeContent: HomeContent = {
   },
   safety: {
     anchor: "safety",
-    headline: "Safety Designed for Everyone, Enhanced for Women",
+    headline: "Safety Engineered Into Every Journey",
     intro:
-      "At LOKRYD, women's safety is not an afterthought — it's built into every aspect of our service.",
+      "At LOKRYD, passenger safety is anchored by verified chauffeurs, regular vehicle maintenance, and real-time route monitoring.",
     backgroundImage: "/images/safety.jpg",
-    backgroundImageAlt: "Interior view of luxury vehicle highlighting seat belt and door lock safety controls",
+    backgroundImageAlt: "Interior view of vehicle highlighting passenger safety controls and seat belts",
     items: [
       {
-        title: "24/7 Safety Helpline",
+        title: "Operations Support",
         description:
-          "Dedicated emergency support monitored round-the-clock by trained safety personnel ready to respond immediately.",
+          "Direct operations assistance and route dispatch support ready to respond to schedule or itinerary requirements.",
       },
       {
-        title: "SOS Emergency Button",
+        title: "Real-Time GPS Tracking",
         description:
-          "One-tap emergency alert that instantly notifies our safety team, shares live location, and can contact local authorities if needed.",
-      },
-      {
-        title: "Live Trip Sharing",
-        description:
-          "Share real-time trip details with family, friends, or colleagues who can track the journey from start to finish.",
+          "Continuous location tracking across all fleet vehicles providing route adherence and trip visibility.",
       },
       {
         title: "Verified Driver Profiles",
         description:
-          "Complete driver information including photo, name, license details, and ratings visible before the ride begins.",
+          "Complete driver credentials including commercial license verification, identity validation, and background screening.",
       },
       {
-        title: "Driver Background Verification",
+        title: "Pre-Dispatch Vehicle Checks",
         description:
-          "Comprehensive checks including police verification, address validation, and employment screening for every driver.",
+          "Routine tyre, brake, and safety control checks performed before daily route assignments.",
       },
     ],
   },

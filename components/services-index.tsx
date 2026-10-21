@@ -17,8 +17,6 @@ export default function ServicesIndex() {
     scrollPosAtInteraction.current = typeof window !== "undefined" ? window.scrollY : 0;
   };
 
-  // Scroll-based single-open service selection
-  // Natural bi-directional flow: 01 -> 02 -> 03 when scrolling down, 03 -> 02 -> 01 when scrolling up
   useEffect(() => {
     let rafId: number | null = null;
 
@@ -27,8 +25,6 @@ export default function ServicesIndex() {
       rafId = requestAnimationFrame(() => {
         rafId = null;
 
-        // If user explicitly clicked/tapped recently, maintain that selection
-        // until they scroll noticeably (> 75px)
         if (userInteractedRef.current) {
           if (Math.abs(window.scrollY - scrollPosAtInteraction.current) > 75) {
             userInteractedRef.current = false;
@@ -37,15 +33,12 @@ export default function ServicesIndex() {
           }
         }
 
-        // Section-relative scroll tracking (completely immune to layout shift from expanding/collapsing items)
         const sectionEl = document.getElementById(homeContent.services.anchor);
         if (!sectionEl) return;
 
         const sRect = sectionEl.getBoundingClientRect();
         const vh = window.innerHeight;
 
-        // Earlier scroll activation so the next service becomes active earlier
-        // and Service 03 activates when relevant content reaches middle/upper-middle viewport
         if (sRect.top > 0.05 * vh) {
           setActiveServiceIndex(0);
         } else if (sRect.top > -0.22 * vh) {
@@ -68,23 +61,36 @@ export default function ServicesIndex() {
   return (
     <section
       id={homeContent.services.anchor}
-      className="below-fold relative w-full bg-[#FFFFFF] py-16 sm:py-20 md:py-24 px-6 md:px-12 lg:px-20 scroll-mt-20 overflow-hidden"
+      className="below-fold relative w-full bg-[#FFFFFF] py-20 sm:py-24 md:py-32 px-6 md:px-12 lg:px-20 scroll-mt-20 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
-        {/* Section Headline */}
-        <div className="max-w-3xl mb-12 sm:mb-14 md:mb-16">
-          <ScrollRevealText
-            as="h2"
-            className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl text-[#16224E] tracking-tight"
-          >
+      {/* Background Watermark Numeral */}
+      <div className="absolute top-12 right-12 lg:right-24 select-none pointer-events-none opacity-40">
+        <span className="editorial-watermark text-[#16224E]/[0.05]">02</span>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-14 sm:mb-16 md:mb-20">
+          <div className="reveal-init mb-3">
+            <span className="editorial-eyebrow">
+              <span>[ 02 ]</span>
+              <span>MOBILITY SOLUTIONS</span>
+            </span>
+          </div>
+
+          <h2 className="reveal-init font-heading font-black uppercase text-[clamp(2rem,4.2vw,4rem)] leading-[0.93] tracking-[-0.03em] text-[#16224E] mb-5">
             {homeContent.services.headline}
-          </ScrollRevealText>
+          </h2>
+
+          <p className="reveal-init font-body text-[#16224E]/80 text-base sm:text-lg md:text-xl font-light leading-[1.55] max-w-xl">
+            Precision fleet logistics, dedicated corporate routes, and discreet chauffeur services designed for continuous operational performance.
+          </p>
         </div>
 
         {/* Desktop Editorial Index (Left text stack, right tall sticky image) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Left Column: Typographic Services Stack */}
-          <div className="lg:col-span-7 flex flex-col space-y-6 sm:space-y-8">
+          <div className="lg:col-span-7 flex flex-col space-y-4">
             {homeContent.services.items.map((service, idx) => {
               const isActive = activeServiceIndex === idx;
 
@@ -93,7 +99,7 @@ export default function ServicesIndex() {
                   key={service.id}
                   id={`service-item-${idx}`}
                   data-service-index={idx}
-                  className="reveal-init"
+                  className="reveal-init hairline-b pb-6 pt-2"
                   tabIndex={0}
                   role="region"
                   aria-label={service.name}
@@ -103,31 +109,30 @@ export default function ServicesIndex() {
                     <button
                       type="button"
                       onClick={() => selectService(idx)}
-                      className="text-left w-full focus:outline-none cursor-pointer group py-1"
+                      className="text-left w-full focus:outline-none cursor-pointer group py-2"
                       aria-expanded={isActive}
                       aria-controls={`service-content-desktop-${idx}`}
                     >
-                      <h3
-                        className={`font-heading font-semibold text-3xl xl:text-4xl transition-colors duration-300 flex items-center ${
-                          isActive
-                            ? "text-[#16224E]"
-                            : "text-[#16224E]/40 group-hover:text-[#16224E]/75"
-                        }`}
-                      >
-                        <span
-                          className={`inline-flex items-center justify-center w-8 h-8 rounded-full border text-xs sm:text-sm font-body font-medium mr-3.5 transition-colors duration-300 shrink-0 [font-feature-settings:normal] ${
+                      <div className="flex items-baseline justify-between">
+                        <h3
+                          className={`font-heading font-black uppercase text-2xl xl:text-3xl transition-colors duration-300 flex items-center ${
                             isActive
-                              ? "border-[#16224E] text-[#16224E]"
-                              : "border-[#16224E]/25 text-[#16224E]/50 group-hover:border-[#16224E]/50 group-hover:text-[#16224E]/75"
+                              ? "text-[#16224E]"
+                              : "text-[#16224E]/35 group-hover:text-[#16224E]/70"
                           }`}
                         >
-                          0{idx + 1}
+                          <span className="font-mono text-xs text-[#1DAFC8] tracking-widest mr-4 font-bold">
+                            0{idx + 1}
+                          </span>
+                          <span>{service.name}</span>
+                        </h3>
+                        <span className={`text-sm font-mono transition-transform duration-300 ${isActive ? "text-[#1DAFC8] translate-x-1" : "text-[#16224E]/20"}`}>
+                          →
                         </span>
-                        <span>{service.name}</span>
-                      </h3>
+                      </div>
                     </button>
 
-                    {/* Accordion Content Panel (Fully collapses and releases layout height when inactive) */}
+                    {/* Accordion Content Panel */}
                     <div
                       id={`service-content-desktop-${idx}`}
                       className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
@@ -138,34 +143,35 @@ export default function ServicesIndex() {
                       aria-hidden={!isActive}
                     >
                       <div className="overflow-hidden">
-                        <div className="pt-4 space-y-4">
-                          <p className="font-body text-base lg:text-lg text-[#16224E]/85 leading-relaxed max-w-xl">
+                        <div className="pt-3 pb-2 space-y-4">
+                          <p className="font-body text-base lg:text-[17px] text-[#16224E]/80 leading-relaxed max-w-xl">
                             {service.description}
                           </p>
 
                           <div className="pt-1">
                             <Link
                               href={service.actionHref}
-                              className="link-arrow text-base font-medium text-[#16224E] group/link inline-flex items-center"
+                              className="link-arrow text-[15px] font-semibold text-[#16224E] group/link inline-flex items-center"
                             >
                               <span className="link-text">{service.actionText}</span>
                               <span className="arrow-symbol text-[#1DAFC8]">→</span>
                             </Link>
                           </div>
 
-                          {/* Sub-links (Inside the active panel) */}
+                          {/* Sub-links */}
                           <div className="pt-4 border-t border-[#16224E]/10">
-                            <p className="text-xs uppercase tracking-wider text-[#16224E]/50 font-medium mb-2.5">
-                              Available Specializations
+                            <p className="font-mono text-[11px] uppercase tracking-wider text-[#16224E]/50 font-semibold mb-2.5">
+                              DEPLOYED CONFIGURATIONS
                             </p>
-                            <div className="flex flex-wrap gap-x-6 gap-y-2">
+                            <div className="flex flex-wrap gap-x-5 gap-y-2">
                               {service.subLinks.map((sub) => (
                                 <Link
                                   key={sub.href}
                                   href={sub.href}
-                                  className="text-sm text-[#16224E]/75 hover:text-[#1DAFC8] transition-colors underline-offset-4 hover:underline"
+                                  className="text-[13px] text-[#16224E]/75 hover:text-[#1DAFC8] transition-colors flex items-center gap-1 font-medium"
                                 >
-                                  {sub.title}
+                                  <span>{sub.title}</span>
+                                  <span className="text-[#1DAFC8]/60">↗</span>
                                 </Link>
                               ))}
                             </div>
@@ -175,82 +181,68 @@ export default function ServicesIndex() {
                     </div>
                   </div>
 
-                  {/* Mobile & Tablet Accordion Presentation */}
-                  <div className="lg:hidden border-b border-[#16224E]/10 pb-5 pt-2 first:pt-0">
+                  {/* Mobile Item Presentation: Visual Card with Dedicated Real Vehicle Image */}
+                  <div className="lg:hidden">
                     <button
                       type="button"
                       onClick={() => selectService(idx)}
-                      className="w-full text-left flex items-center justify-between py-2 focus:outline-none cursor-pointer group"
+                      className="text-left w-full focus:outline-none cursor-pointer py-2"
                       aria-expanded={isActive}
                       aria-controls={`service-content-mobile-${idx}`}
                     >
-                      <h3
-                        className={`font-heading font-semibold text-2xl flex items-center transition-colors duration-300 ${
-                          isActive
-                            ? "text-[#16224E]"
-                            : "text-[#16224E]/50 group-hover:text-[#16224E]/80"
-                        }`}
-                      >
-                        <span
-                          className={`inline-flex items-center justify-center w-7 h-7 rounded-full border text-xs font-body font-medium mr-3 transition-colors duration-300 shrink-0 [font-feature-settings:normal] ${
-                            isActive
-                              ? "border-[#16224E] text-[#16224E]"
-                              : "border-[#16224E]/25 text-[#16224E]/50 group-hover:border-[#16224E]/50 group-hover:text-[#16224E]/75"
-                          }`}
-                        >
-                          0{idx + 1}
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-heading font-black uppercase text-xl text-[#16224E] flex items-center">
+                          <span className="font-mono text-xs text-[#1DAFC8] tracking-widest mr-3 font-bold">
+                            0{idx + 1}
+                          </span>
+                          <span>{service.name}</span>
+                        </h3>
+                        <span className={`text-base font-mono transition-transform duration-300 ${isActive ? "text-[#1DAFC8] rotate-90" : "text-[#16224E]/40"}`}>
+                          ↓
                         </span>
-                        <span>{service.name}</span>
-                      </h3>
-                      <span className="text-2xl text-[#1DAFC8] ml-4 transition-transform duration-200">
-                        {isActive ? "−" : "+"}
-                      </span>
+                      </div>
                     </button>
 
                     <div
                       id={`service-content-mobile-${idx}`}
-                      className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
                         isActive
-                          ? "grid-rows-[1fr] opacity-100 pointer-events-auto"
-                          : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
                       }`}
-                      aria-hidden={!isActive}
                     >
                       <div className="overflow-hidden">
-                        <div className="pt-2 space-y-4">
-                          {/* Inline Mobile Image with Subtle Scale */}
-                          <div className="relative w-full aspect-video overflow-hidden my-3 bg-[#16224E]/10 rounded-lg group/mob">
+                        <div className="pt-4 space-y-4">
+                          <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#16224E]/5 border border-[#16224E]/10">
                             <Image
                               src={service.image}
                               alt={service.imageAlt}
                               fill
-                              priority={true}
                               sizes="100vw"
-                              className="object-cover transition-transform duration-[600ms] ease-out group-hover/mob:scale-[1.035]"
+                              className="object-cover"
                             />
                           </div>
 
-                          <p className="font-body text-base text-[#16224E]/85 leading-relaxed">
+                          <p className="font-body text-[15px] text-[#16224E]/80 leading-relaxed">
                             {service.description}
                           </p>
 
-                          <div>
+                          <div className="pt-1">
                             <Link
                               href={service.actionHref}
-                              className="link-arrow text-base font-medium text-[#16224E]"
+                              className="link-arrow text-sm font-semibold text-[#16224E]"
                             >
                               <span className="link-text">{service.actionText}</span>
                               <span className="arrow-symbol text-[#1DAFC8]">→</span>
                             </Link>
                           </div>
 
-                          {/* Mobile Sub-links */}
                           <div className="pt-3 border-t border-[#16224E]/10 flex flex-col space-y-2">
                             {service.subLinks.map((sub) => (
                               <Link
                                 key={sub.href}
                                 href={sub.href}
-                                className="text-sm text-[#16224E]/75 hover:text-[#1DAFC8] transition-colors"
+                                className="text-[13px] text-[#16224E]/75 hover:text-[#1DAFC8] transition-colors"
                               >
                                 {sub.title} →
                               </Link>
@@ -265,9 +257,9 @@ export default function ServicesIndex() {
             })}
           </div>
 
-          {/* Right Column: Tall Sticky Image with Refined 850ms Crossfade & 1.035 Hover Scale */}
+          {/* Right Column: Tall Sticky Image with Refined Crossfade */}
           <div className="hidden lg:block lg:col-span-5 sticky top-28">
-            <div className="relative w-full h-[480px] xl:h-[520px] rounded-xl overflow-hidden bg-[#16224E] shadow-[0_16px_40px_rgba(22,34,78,0.08)] hover:shadow-[0_24px_50px_rgba(22,34,78,0.14)] transition-shadow duration-[600ms] ease-out">
+            <div className="relative w-full h-[500px] xl:h-[540px] overflow-hidden bg-[#16224E] shadow-[0_24px_52px_rgba(22,34,78,0.12)] border border-[#16224E]/10 group/img">
               {homeContent.services.items.map((service, idx) => (
                 <div
                   key={service.id}
@@ -277,16 +269,20 @@ export default function ServicesIndex() {
                       : "opacity-0 z-0 pointer-events-none"
                   }`}
                 >
-                  <div className="relative w-full h-full overflow-hidden group/img cursor-pointer">
+                  <div className="relative w-full h-full overflow-hidden">
                     <Image
                       src={service.image}
                       alt={service.imageAlt}
                       fill
-                      priority={true}
+                      priority={idx === 0}
                       sizes="45vw"
-                      className="object-cover transition-transform duration-[600ms] ease-out group-hover/img:scale-[1.035]"
+                      className="object-cover transition-transform duration-[700ms] ease-out group-hover/img:scale-[1.03]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#16224E]/40 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#16224E]/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between text-xs text-white font-mono">
+                      <span className="tracking-widest uppercase">{service.name}</span>
+                      <span className="text-[#1DAFC8]">ACTIVE FLEET</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -294,31 +290,29 @@ export default function ServicesIndex() {
           </div>
         </div>
 
-        {/* Fine hairline separating the list from what follows */}
-        <div className="mt-14 sm:mt-18 w-full h-[1px] bg-[#16224E]/15" />
-
-        {/* Mass Transit Solutions — editorial editorial block */}
-        <div className="mt-14 sm:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+        {/* Mass Transit Solutions — architectural callout */}
+        <div className="mt-20 sm:mt-24 pt-12 hairline-t grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           <div className="lg:col-span-5">
-            <p className="text-xs uppercase tracking-widest text-[#1DAFC8] font-semibold mb-4">
-              Large-Scale Capability
-            </p>
+            <span className="editorial-eyebrow mb-2">
+              <span>[ SCALE ]</span>
+              <span>MASS TRANSIT INFRASTRUCTURE</span>
+            </span>
             <ScrollRevealText
               as="h3"
-              className="font-heading font-semibold text-2xl sm:text-3xl lg:text-4xl text-[#16224E] tracking-tight leading-tight"
+              className="font-heading font-black uppercase text-2xl sm:text-3xl text-[#16224E] tracking-tight leading-tight"
             >
               {homeContent.services.massTransit.headline}
             </ScrollRevealText>
           </div>
-          <div className="lg:col-span-7 space-y-5">
-            <p className="reveal-init font-body text-[#16224E]/85 text-base sm:text-lg leading-relaxed">
+          <div className="lg:col-span-7 space-y-4">
+            <p className="reveal-init font-body text-[#16224E]/80 text-base sm:text-lg leading-relaxed font-light">
               {homeContent.services.massTransit.intro}
             </p>
-            <ul className="reveal-init space-y-3">
+            <ul className="reveal-init space-y-2.5">
               {homeContent.services.massTransit.capabilities.map((cap) => (
                 <li key={cap} className="flex items-start gap-3">
-                  <span className="mt-1.5 w-[5px] h-[5px] rounded-full bg-[#1DAFC8] shrink-0" />
-                  <span className="font-body text-[#16224E]/80 text-[15px] sm:text-base leading-relaxed">{cap}</span>
+                  <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1DAFC8] shrink-0" />
+                  <span className="font-body text-[#16224E]/80 text-[15px] leading-relaxed">{cap}</span>
                 </li>
               ))}
             </ul>

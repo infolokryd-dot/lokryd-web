@@ -38,7 +38,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FFFFFF] text-[#16224E]">
-      <Navbar forceScrolled={true} />
+      <Navbar forceDarkText={true} />
 
       <main
         id="main-content"
@@ -53,11 +53,11 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
         </h1>
 
         <p className="font-body text-lg sm:text-xl text-[#16224E]/80 max-w-xl mb-10 leading-relaxed">
-          Detailed information for this service is coming soon.
+          Comprehensive mobility options tailored for corporate workforces, campus shuttles, and executive travel.
         </p>
 
         <div>
-          <Link href="/#enquiry" className="btn-primary text-base py-3 px-8">
+          <Link href="/contact" className="btn-primary text-base py-3 px-8">
             Make an Enquiry
           </Link>
         </div>

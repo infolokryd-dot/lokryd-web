@@ -1,181 +1,61 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { homeContent } from "@/src/content/home";
+import Link from "next/link";
 
-interface IntroHeroProps {
-  onPreselectInquiry?: (type: string) => void;
-}
-
-export default function IntroHero({ onPreselectInquiry }: IntroHeroProps) {
-  const [introVisible, setIntroVisible] = useState(false);
-  const [introFadingOut, setIntroFadingOut] = useState(false);
-  const [showSkip, setShowSkip] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const playTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const safetyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const completeIntro = () => {
-    try {
-      sessionStorage.setItem("lokryd_intro_seen", "true");
-    } catch {
-      // Ignore storage restrictions
-    }
-    setIntroFadingOut(true);
-    setTimeout(() => {
-      setIntroVisible(false);
-    }, 700);
-  };
-
-  useEffect(() => {
-    // 1. Check reduced motion preference
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    // 2. Check if already seen in this session
-    try {
-      const seen = sessionStorage.getItem("lokryd_intro_seen");
-      if (seen) {
-        return;
-      }
-    } catch {
-      // Storage unavailable, proceed to check
-    }
-
-    // 3. User hasn't seen intro: display overlay
-    const introInitTimer = setTimeout(() => {
-      setIntroVisible(true);
-    }, 10);
-
-    // Skip control appears after 1 second
-    const skipTimer = setTimeout(() => {
-      setShowSkip(true);
-    }, 1000);
-
-    // Absolute maximum intro duration 10 seconds
-    safetyTimeoutRef.current = setTimeout(() => {
-      completeIntro();
-    }, homeContent.intro.maxDurationSeconds * 1000);
-
-    // Fallback: If video does not start within 2 seconds, skip immediately
-    playTimeoutRef.current = setTimeout(() => {
-      const vid = videoRef.current;
-      if (!vid || vid.paused || vid.currentTime === 0) {
-        completeIntro();
-      }
-    }, 2000);
-
-    return () => {
-      clearTimeout(introInitTimer);
-      clearTimeout(skipTimer);
-      if (safetyTimeoutRef.current) clearTimeout(safetyTimeoutRef.current);
-      if (playTimeoutRef.current) clearTimeout(playTimeoutRef.current);
-    };
-  }, []);
-
-  const handleVideoEnded = () => {
-    completeIntro();
-  };
-
-  const handleVideoError = () => {
-    completeIntro();
-  };
-
-  const handleDemoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onPreselectInquiry) {
-      onPreselectInquiry(homeContent.hero.secondaryButton.preselectType);
-    } else {
-      window.dispatchEvent(
-        new CustomEvent("lokryd:select-inquiry", {
-          detail: { inquiryType: homeContent.hero.secondaryButton.preselectType },
-        })
-      );
-    }
-    const enquiryEl = document.getElementById("enquiry");
-    if (enquiryEl) {
-      enquiryEl.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+export default function IntroHero() {
   return (
-    <section className="relative w-full h-[100svh] min-h-[640px] max-h-[900px] flex flex-col justify-end overflow-hidden bg-[#16224E]">
-      {/* Intro Video Overlay */}
-      {introVisible && (
-        <div
-          className={`fixed inset-0 z-50 bg-[#16224E] flex items-center justify-center transition-opacity duration-700 ease-out ${
-            introFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-          aria-hidden={introFadingOut}
-        >
-          <video
-            ref={videoRef}
-            src={homeContent.intro.videoSrc}
-            poster={homeContent.intro.posterSrc}
-            autoPlay
-            muted
-            playsInline
-            onEnded={handleVideoEnded}
-            onError={handleVideoError}
-            className="w-full h-full object-cover"
-          />
-
-          {showSkip && (
-            <button
-              type="button"
-              onClick={completeIntro}
-              className="absolute top-8 right-8 z-10 px-4 py-1.5 text-xs tracking-widest uppercase font-mono text-white/90 hover:text-white bg-black/50 hover:bg-black/75 backdrop-blur-md rounded-full border border-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-[#1DAFC8]"
-            >
-              {homeContent.intro.skipButtonText}
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* Hero Still Image Layer (Full-bleed behind headline) */}
-      <div className="absolute inset-0 z-0 bg-[#16224E]">
+    <section
+      data-theme="dark"
+      className="relative w-full min-h-[92vh] lg:min-h-screen flex flex-col justify-end overflow-hidden bg-[#0A1020]"
+    >
+      {/* 1. Exact City Motion Background: Dusk Skyline, Sunset Glow, Giant Translucent LOKRYD Wordmark & Mercedes S-Class Sedan */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
         <Image
-          src={homeContent.hero.image}
-          alt={homeContent.hero.imageAlt}
+          src="/images/city-motion-v2.jpg"
+          alt="LOKRYD City Motion — Dusk urban skyline with embedded architectural wordmark and executive luxury sedan"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center scale-[1.01]"
         />
 
-        {/* Local Dark Scrim for Perfect Text Legibility & AA Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#16224E]/95 via-[#16224E]/65 to-[#16224E]/30" />
-        <div className="absolute inset-0 bg-[#16224E]/35" />
+        {/* Top Scrim for Navbar Contrast */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0A1224]/75 via-[#0A1224]/25 to-transparent pointer-events-none" />
+
+        {/* Bottom Blend to Page Canvas */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0A1020]/30 to-transparent pointer-events-none" />
       </div>
 
-      {/* Hero Content: Headline & Subheadline Bottom-Left (Clean straight edge at bottom) */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-10 pb-16 sm:pb-20 md:pb-24 pt-28 flex flex-col justify-end">
-        <div className="max-w-4xl space-y-6">
-          <h1 className="font-heading font-bold text-[clamp(2.5rem,5.75vw,5.75rem)] leading-[0.96] tracking-tight text-white">
-            {homeContent.hero.headlineLines.map((line, i) => (
-              <span key={i} className="block">{line}</span>
-            ))}
-          </h1>
+      {/* 2. Hero Foreground Content Grid: Left 3-Line Headline + Right Vertical Border, Supporting Text & White Pill CTA */}
+      <div className="relative z-20 max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-20 pt-36 sm:pt-44 lg:pt-48 pb-14 sm:pb-16 lg:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+          {/* Left Column: Exactly Matching Reference Typography */}
+          <div className="lg:col-span-7 space-y-3 sm:space-y-4">
+            <h1 className="font-heading font-black uppercase text-[clamp(2.75rem,5.8vw,5.5rem)] leading-[0.92] tracking-[-0.035em] text-white">
+              <span className="block">MOVE WITH</span>
+              <span className="block text-[#38BDF8]">PURPOSE.</span>
+            </h1>
+            <p className="font-heading uppercase tracking-[0.22em] sm:tracking-[0.25em] text-xs sm:text-sm md:text-base font-medium text-white/90">
+              JOURNEYS WITH PRECISION.
+            </p>
+          </div>
 
-          <p className="font-body text-white/95 text-lg sm:text-xl md:text-2xl font-normal leading-relaxed max-w-2xl">
-            {homeContent.hero.subheadline}
-          </p>
+          {/* Right Column: Vertical Left Divider Line, Concise Supporting Copy, and Solid White Pill CTA */}
+          <div className="lg:col-span-5 border-l border-white/20 pl-6 sm:pl-8 space-y-5 lg:space-y-6 lg:pb-1">
+            <p className="font-body text-white/90 text-sm sm:text-base font-light leading-relaxed max-w-md">
+              Premium mobility solutions for businesses and individuals. From daily commutes to special journeys, we deliver safe, reliable and comfortable experiences.
+            </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-6 sm:gap-8">
-            <a
-              href={homeContent.hero.secondaryButton.href}
-              onClick={handleDemoClick}
-              className="link-arrow text-white hover:text-[#1DAFC8] text-base font-medium group"
-            >
-              <span className="link-text">{homeContent.hero.secondaryButton.text}</span>
-              <span className="arrow-symbol text-[#1DAFC8]">→</span>
-            </a>
+            <div>
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center bg-[#FFFFFF] text-[#16224E] hover:bg-white/90 font-semibold text-sm sm:text-base px-7 sm:px-8 py-3 sm:py-3.5 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.25)] transition-all group"
+              >
+                <span>Explore Our Services</span>
+                <span className="ml-2.5 font-bold group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
