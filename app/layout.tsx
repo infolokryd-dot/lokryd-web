@@ -38,16 +38,16 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
 };
-
+// This is a comment
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lokryd.in"),
+  metadataBase: new URL("https://www.lokryd.in"),
   title: {
-    default: "LOKRYD | Corporate & Private Mobility Services",
+    default: "LOKRYD | Corporate Transportation in Hyderabad",
     template: "%s | LOKRYD",
   },
   description:
-    "LOKRYD provides corporate employee transportation, corporate car rentals, airport transfers, outstation travel, and private chauffeur services.",
+    "LOKRYD provides corporate employee transportation, staff pickup and drop, corporate car rentals, airport transfers, outstation travel, and private chauffeur services in Hyderabad.",
   alternates: {
     canonical: "/",
   },
@@ -56,10 +56,10 @@ export const metadata: Metadata = {
     apple: "/brand/star.svg",
   },
   openGraph: {
-    title: "LOKRYD | Corporate & Private Mobility Services",
+    title: "LOKRYD | Corporate Transportation in Hyderabad",
     description:
-      "Reliable corporate transportation and private mobility services for business and personal journeys.",
-    url: "https://lokryd.in/",
+      "Corporate employee transportation, staff pickup and drop, and private mobility services in Hyderabad by LOKRYD.",
+    url: "https://www.lokryd.in/",
     siteName: "LOKRYD",
     images: [
       {
@@ -74,9 +74,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LOKRYD | Corporate & Private Mobility Services",
+    title: "LOKRYD | Corporate Transportation in Hyderabad",
     description:
-      "Corporate employee transportation, airport transfers, and private chauffeur services.",
+      "Corporate employee transportation, staff pickup and drop, airport transfers, and private mobility services in Hyderabad.",
     images: ["/images/hero-still.jpg"],
   },
   robots: {

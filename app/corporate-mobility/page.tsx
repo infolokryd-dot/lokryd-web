@@ -5,9 +5,9 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Corporate Mobility & Employee Transportation | LOKRYD",
+  title: "Corporate Transportation in Hyderabad | LOKRYD",
   description:
-    "Structured employee transportation services, corporate car rentals, and campus transit coaches across Hyderabad and Telangana.",
+    "LOKRYD provides employee transportation, staff pickup and drop, corporate car rentals, and campus shuttle services for businesses in Hyderabad.",
   alternates: {
     canonical: "/corporate-mobility",
   },
@@ -27,10 +27,10 @@ export default function CorporateMobilityPage() {
                 Enterprise Ground Logistics
               </span>
               <h1 className="font-heading font-black uppercase text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[0.95]">
-                Corporate Mobility & Employee Transportation
+                Corporate Transportation in Hyderabad
               </h1>
               <p className="font-body text-white/85 text-lg sm:text-xl font-light leading-relaxed max-w-2xl">
-                Structured, punctual, and technology-monitored ground transportation engineered for tech parks, MNCs, and corporate workforces across Telangana.
+                LOKRYD delivers structured employee transportation, staff pickup and drop, and corporate shuttle services for businesses across Hyderabad, supported by technology-enabled operations and professional chauffeurs.
               </p>
               <div className="pt-2">
                 <Link href="/contact" className="btn-primary text-base py-3 px-8">
